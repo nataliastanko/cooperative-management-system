@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+#app variables
+/config/initializers/app_env_vars.rb
+
 # Ignore bundler config.
 /.bundle
 
