@@ -1,29 +1,54 @@
-- model_class = Producer
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h1= @producer.name
 
-%p
-  %strong= model_class.human_attribute_name(:name) + ':'
-  %br
-  = @producer.name
-%p
-  %strong= model_class.human_attribute_name(:description) + ':'
-  %br
-  = @producer.description
-%p
-  %strong= model_class.human_attribute_name(:is_active) + ':'
-  %br
-  = @producer.is_active
-%p
-  %strong= model_class.human_attribute_name(:address) + ':'
-  %br
-  = @producer.address
-%p
-  %strong= model_class.human_attribute_name(:phone) + ':'
-  %br
-  = @producer.phone
+.row
+  .col-lg-3
+    %strong Osoby kontaktowe
+    %p
+      %strong Aktywny?
+      %br
+      - if @producer.is_active
+        Tak
+      - else
+        Nie
+    %p
+      %strong Adres
+      %br
+      = @producer.address
+    %p
+      %strong Telefon
+      %br
+      = @producer.phone
+  .col-lg-9
+    - if @producer.description
+      %div
+        %strong Opis
+        %br
+      = @producer.description
 
-
-= link_to t('.back', :default => t("helpers.links.back")), producers_path, :class => 'btn btn-default'
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_producer_path(@producer), :class => 'btn btn-default'
 = link_to t('.destroy', :default => t("helpers.links.destroy")), producer_path(@producer), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+
+%h2 Produkty
+
+= link_to 'Dodaj nowy', new_producer_product_path(@producer), :class => 'btn btn-primary'
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nazwa
+      %th Dostępny?
+      %th Cena
+      %th Jednostka
+      %th &nbsp;
+  %tbody
+    - @producer.products.each do |product|
+      %tr
+        %td= link_to product.name, product_path(product)
+        %td
+          - if product.is_active
+            Tak
+          - else
+            Nie
+        %td= product.price
+        %td= product.unit

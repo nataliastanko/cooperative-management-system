@@ -11,12 +11,12 @@
       %th Dostępny?
       %th Cena
       %th Jednostka
-      %th=t '.actions', :default => t("helpers.actions")
+      %th &nbsp;
   %tbody
     - @products.each do |product|
       %tr
         %td= link_to product.name, product_path(product)
-        %td= product.producer.name
+        %td= link_to product.producer.name, producer_path(product.producer)
         %td
           - if product.is_active
             Tak

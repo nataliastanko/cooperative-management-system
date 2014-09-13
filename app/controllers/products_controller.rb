@@ -16,6 +16,10 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    if params['producer_id']
+      producer = Producer.find(params['producer_id'])
+      @product.producer = producer
+    end
   end
 
   # GET /products/1/edit
@@ -26,7 +30,10 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-
+    if params['producer_id']
+      producer = Producer.find(params['producer_id'])
+      @product.producer = producer
+    end
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }

@@ -24,6 +24,6 @@
     = f.text_area :description, class: 'form-control'
     = error_span(@product[:description])
   .form-group
-    = f.submit :submit, :class => 'btn-primary'
+    = f.submit "Zapisz", class: 'btn btn-primary'
 
   = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn btn-default'

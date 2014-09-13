@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   resources :producers
 
+  resources :producers do
+    resources :products
+  end
+
   resources :products do
     resources :product_comments
   end
