@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140913045643) do
+ActiveRecord::Schema.define(version: 20140913195629) do
 
   create_table "identities", force: true do |t|
     t.integer  "user_id"
@@ -52,7 +52,10 @@ ActiveRecord::Schema.define(version: 20140913045643) do
     t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "producer_id"
   end
+
+  add_index "products", ["producer_id"], name: "index_products_on_producer_id"
 
   create_table "roles", force: true do |t|
     t.string   "name"

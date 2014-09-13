@@ -1,28 +1,30 @@
-- model_class = Product
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h1= @product.name
 
 %p
-  %strong= model_class.human_attribute_name(:name) + ':'
+  %strong Producent
   %br
-  = @product.name
+  = @product.producer.name
 %p
-  %strong= model_class.human_attribute_name(:description) + ':'
+  %strong Dostępny?
   %br
-  = @product.description
+  - if @product.is_active
+    Tak
+  - else
+    Nie
 %p
-  %strong= model_class.human_attribute_name(:is_active) + ':'
-  %br
-  = @product.is_active
-%p
-  %strong= model_class.human_attribute_name(:price) + ':'
+  %strong Cena
   %br
   = @product.price
 %p
-  %strong= model_class.human_attribute_name(:unit) + ':'
+  %strong Jednostka
   %br
   = @product.unit
-
+- if @product.description
+  %p
+    %strong Opis
+    %br
+    = @product.description
 
 = link_to t('.back', :default => t("helpers.links.back")), products_path, :class => 'btn btn-default'
 = link_to t('.edit', :default => t("helpers.links.edit")), edit_product_path(@product), :class => 'btn btn-default'
