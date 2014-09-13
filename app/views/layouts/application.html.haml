@@ -25,11 +25,12 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand(href="#") CooperativeManagementSystem
+        = link_to "System zamówień kooperatywy", root_path, class: 'navbar-brand'
         .navbar-collapse.collapse.navbar-responsive-collapse
           %ul.nav.navbar-nav
             - if user_signed_in?
               %li= link_to "Produkty", products_path
+              %li= link_to "Producenci", producers_path
               %li= link_to "Moje konto", user_path(current_user)
               %li= link_to "Wyloguj się", destroy_user_session_path, :method => :delete
             - else
