@@ -1,0 +1,27 @@
+%h1== #{@user.fullname}
+
+.well
+  .div
+    %strong
+      Imię
+    = current_user.firstname
+  .div
+    %strong
+      Nazwisko
+    = current_user.lastname
+  .div
+    %strong
+      Email
+    = current_user.email
+  .div
+    %strong
+      Phone
+    = current_user.phone
+  .div
+    %strong
+      Adres
+    = current_user.address
+
+= link_to "Edycja konta", edit_user_path(current_user), :class => "btn btn-default"
+
+%h2 Historia zamówień
