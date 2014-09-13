@@ -1,18 +1,20 @@
 class User < ActiveRecord::Base
+
+  rolify
+
+  TEMP_EMAIL_PREFIX = 'change@me'
+  TEMP_EMAIL_REGEX = /\Achange@me/
+
+  devise :database_authenticatable, :registerable, :confirmable,
+    :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :trackable, :validatable
 
-  TEMP_EMAIL_PREFIX = 'change@me'
-  TEMP_EMAIL_REGEX = /\Achange@me/
-
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable
-  devise :database_authenticatable, :registerable, :confirmable,
-    :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+  before_save :set_default_role
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
@@ -67,5 +69,12 @@ class User < ActiveRecord::Base
       self.email
     end
   end
+
+  private
+  def set_default_role
+      self.add_role :user
+  end
+
+  #ROLES: :admin, :user, :manager, wrapper
 
 end

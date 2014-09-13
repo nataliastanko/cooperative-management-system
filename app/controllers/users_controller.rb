@@ -1,9 +1,15 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users/:id.:format
   def show
     # authorize! :read, @user
+  end
+
+  # GET /users
+  def index
+    @users = User.all
   end
 
   # GET /users/:id/edit
@@ -56,7 +62,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      accessible = [ :name, :email ] # extend with your own params
+      accessible = [ :firstname, :lastname, :email, :phone, :role_ids => [] ] # extend with your own params
       accessible << [ :password, :password_confirmation ] unless params[:user][:password].blank?
       params.require(:user).permit(accessible)
     end

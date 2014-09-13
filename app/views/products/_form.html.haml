@@ -1,13 +1,25 @@
-= simple_form_for @product, :html => { :class => 'form-horizontal' } do |f|
-  = f.input :name
-  = error_span(@product[:name])
-  = f.input :description
-  = error_span(@product[:description])
-  = f.input :is_active
-  = error_span(@product[:is_active])
-  = f.input :price
-  = error_span(@product[:price])
-  = f.input :unit
-  = error_span(@product[:unit])
-  = f.button :submit, :class => 'btn-primary'
+= form_for @product, :html => { :class => 'form-horizontal' } do |f|
+  .form-group
+    = f.label :name, "Nazwa"
+    = f.text_field :name, class: 'form-control'
+    = error_span(@product[:name])
+  .form-group
+    = f.label :is_active, "Dostępny?"
+    = f.check_box :is_active, class: 'form-control'
+    = error_span(@product[:is_active])
+  .form-group
+    = f.label :unit, "Jednostka"
+    = f.text_field :unit, class: 'form-control'
+    = error_span(@product[:unit])
+  .form-group
+    = f.label :price, "Cena"
+    = f.text_field :price, class: 'form-control'
+    = error_span(@product[:price])
+  .form-group
+    = f.label :description, "Opis"
+    = f.text_area :description, class: 'form-control'
+    = error_span(@product[:description])
+  .form-group
+    = f.submit :submit, :class => 'btn-primary'
+
   = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn btn-default'

@@ -48,6 +48,9 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 
+#user roles
+gem "rolify"
+
 group :development do
     # Use sqlite3 as the database for Active Record
     gem 'sqlite3'

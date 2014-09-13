@@ -18,7 +18,6 @@
     = javascript_include_tag "application"
     = javascript_include_tag :defaults, "nested_form"
 
-
   %body
     .navbar.navbar-default.navbar-static-top
       .container
@@ -32,7 +31,11 @@
             - if user_signed_in?
               %li= link_to "Produkty", products_path
               %li= link_to "Producenci", producers_path
-              %li= link_to "Moje konto", user_path(current_user)
+              - if current_user.has_any_role? :admin, :guardian, :storekeeper
+                %li= link_to "Zamówienia", producers_path
+                %li= link_to "Użytkownicy", users_path
+              %li= link_to "Moje zamówienia", producers_path
+              %li= link_to "Moje konto (#{current_user.email})", user_path(current_user)
               %li= link_to "Wyloguj się", destroy_user_session_path, :method => :delete
             - else
               %li= link_to "Zarejestruj się", new_user_registration_path
@@ -51,8 +54,8 @@
         /       %li= link_to "Zamówienia", "/path3"
         / .col-lg-9
         .col-lg-12
-          / %p.notice= notice
-          / %p.alert= alert
+          / .notice= notice
+          / .alert= alert
           = bootstrap_flash
           = yield
       %footer

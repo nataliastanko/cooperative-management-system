@@ -1,4 +1,5 @@
 class ProductCommentsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_product_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /product_comments

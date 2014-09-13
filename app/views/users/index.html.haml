@@ -1,22 +1,24 @@
-<h3>Lista użytkowników</h3>
-
-<table>
- <tr>
-  <th>Nick</th>
-  <th>email</th>
-  <th>Wiek</th>
-  <th>Ankiety</th>
-  <th>Edytuj</th>
-  <th>Usuń</th>
-</tr>
-<% @users.each do |user| %>
-<tr>
-  <td><%=link_to user.username, user %></td>
-  <td><%=link_to user.email, user %></td>
-  <td><%= user.age %></td>
-  <td><%= link_to 'Ankiety', user_questionnaires_path(user) %></td>
-  <td><%= link_to 'Edytuj', edit_user_path(user) %></td>
-  <td><%= link_to 'x', user, confirm: 'Jesteś pewny?', method: :delete %></td>
-</tr>
-<% end %>
-</table>
+%h3 Lista użytkowników
+%table.table
+  %tr
+    %th Imię
+    %th Nazwisko
+    %th Email
+    %th Telefon
+    %th Zamówienia
+    %th Edytuj
+    %th Usuń
+  - @users.each do |user|
+    %tr
+      %td
+        = user.firstname
+      %td
+        = user.lastname
+      %td
+        = link_to user.email, user
+      %td
+        = user.phone
+      %td Zamówienia
+      /%td= link_to 'Ankiety', user_orders_path(user)
+      %td= link_to 'Edytuj', edit_user_path(user)
+      %td= link_to 'x', user, confirm: 'Jesteś pewny?', method: :delete

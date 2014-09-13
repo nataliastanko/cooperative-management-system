@@ -4,24 +4,30 @@
   .div
     %strong
       Imię
-    = current_user.firstname
+    = @user.firstname
   .div
     %strong
       Nazwisko
-    = current_user.lastname
+    = @user.lastname
   .div
     %strong
       Email
-    = current_user.email
+    = @user.email
   .div
     %strong
       Phone
-    = current_user.phone
+    = @user.phone
   .div
     %strong
       Adres
-    = current_user.address
+    = @user.address
 
-= link_to "Edycja konta", edit_user_path(current_user), :class => "btn btn-default"
+  .div
+    %strong
+      Uprawnienia
+    - @user.roles.each do |role|
+      = role.name
+
+= link_to "Edycja konta", edit_user_path(@user), :class => "btn btn-default"
 
 %h2 Historia zamówień
