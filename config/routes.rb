@@ -1,16 +1,23 @@
 Rails.application.routes.draw do
+
   root 'home#index'
   #info pages
   get '/' => 'home#index'
   get 'about' => 'home#about'
+
   #users
-  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+  # devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+
+  devise_for :users, :controllers => { :registrations => "registrations" }
+
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
+
   resources :users
 
   resources :producers
 
   resources :producers do
+    resources :producer_contacts
     resources :products
   end
 

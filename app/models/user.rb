@@ -5,19 +5,24 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :trackable, :validatable
 
+  scope :active, -> { where(is_active: true) }
+  default_scope {order('is_active desc')}
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
   before_save :set_default_role
 
-  def self.find_for_oauth(auth, signed_in_resource = nil)
+  def active_for_authentication?
+    self.is_active
+  end
 
+  def self.find_for_oauth(auth, signed_in_resource = nil)
     # Get the identity and user if they exist
     identity = Identity.find_for_oauth(auth)
 
@@ -58,9 +63,9 @@ class User < ActiveRecord::Base
     user
   end
 
-  def email_verified?
-    self.email && self.email !~ TEMP_EMAIL_REGEX
-  end
+  # def email_verified?
+  #   self.email && self.email !~ TEMP_EMAIL_REGEX
+  # end
 
   def fullname
     if self.firstname && self.lastname
@@ -72,9 +77,12 @@ class User < ActiveRecord::Base
 
   private
   def set_default_role
-      self.add_role :user
+    self.add_role :user
   end
 
-  #ROLES: :admin, :user, :manager, wrapper
+  def set_not_active
+  end
+
+  #ROLES: :admin, :user, :guardian, :storekeeper
 
 end

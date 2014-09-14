@@ -2,32 +2,51 @@
   %h1= @producer.name
 
 .row
-  .col-lg-3
-    %strong Osoby kontaktowe
-    %p
+  .col-lg-6
+    - if !(@producer.producer_contacts.blank?)
+      %div
+        %strong
+          Osoby kontaktowe
+        %ul
+          - @producer.producer_contacts.each do |contact|
+            %li
+              = contact.fullname
+              - if contact.phone
+                %br
+                = contact.phone
+              - if contact.email
+                %br
+                = contact.email
+    %div
       %strong Aktywny?
       %br
       - if @producer.is_active
         Tak
       - else
         Nie
-    %p
-      %strong Adres
+    %div
+      %strong Miejscowość
       %br
-      = @producer.address
-    %p
-      %strong Telefon
+      = @producer.city
+    %div
+      %strong Ulica
       %br
-      = @producer.phone
-  .col-lg-9
-    - if @producer.description
+      = @producer.street
+    - if @producer.zip_code
+      %div
+        %strong Kod pocztowy
+        %br
+        = @producer.zip_code
+  .col-lg-6
+    - if @producer.description.present?
       %div
         %strong Opis
         %br
       = @producer.description
 
-= link_to t('.edit', :default => t("helpers.links.edit")), edit_producer_path(@producer), :class => 'btn btn-default'
-= link_to t('.destroy', :default => t("helpers.links.destroy")), producer_path(@producer), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+= link_to 'Edytuj', edit_producer_path(@producer), :class => 'btn btn-default'
+= link_to 'Edytuj kontakty', new_producer_producer_contact_path(@producer), :class => 'btn btn-default'
+= link_to 'Usuń', producer_path(@producer), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Czy na pewno chcesz usunąć?')) }, :class => 'btn btn-danger'
 
 %h2 Produkty
 
@@ -37,18 +56,21 @@
   %thead
     %tr
       %th Nazwa
-      %th Dostępny?
       %th Cena
       %th Jednostka
+      %th Dostępny?
       %th &nbsp;
   %tbody
     - @producer.products.each do |product|
       %tr
         %td= link_to product.name, product_path(product)
+        %td= product.price
+        %td= product.unit
         %td
           - if product.is_active
             Tak
           - else
             Nie
-        %td= product.price
-        %td= product.unit
+        %td
+          - if product.is_active
+            = link_to 'Dodaj do zamówienia', '#'

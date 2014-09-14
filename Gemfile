@@ -52,14 +52,14 @@ gem 'omniauth-linkedin'
 gem "rolify"
 
 group :development do
-    # Use sqlite3 as the database for Active Record
-    gem 'sqlite3'
-    gem 'pry-rails'
-    gem 'pry'
-    gem "better_errors"
-    gem "rails_best_practices"
-    # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-    gem 'spring'
+  gem "better_errors"
+  gem "haml-rails"
+  gem "rails_best_practices"
+  gem 'pry-rails'
+  gem 'sqlite3'
+  gem 'pry'
+  gem 'spring'
+  gem 'binding_of_caller'
 end
 
 group :production do

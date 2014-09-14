@@ -32,9 +32,9 @@
               %li= link_to "Produkty", products_path
               %li= link_to "Producenci", producers_path
               - if current_user.has_any_role? :admin, :guardian, :storekeeper
-                %li= link_to "Zamówienia", producers_path
+                %li= link_to "Zamówienia", '#'
                 %li= link_to "Użytkownicy", users_path
-              %li= link_to "Moje zamówienia", producers_path
+              %li= link_to "Moje zamówienia", '#'
               %li= link_to "Moje konto (#{current_user.email})", user_path(current_user)
               %li= link_to "Wyloguj się", destroy_user_session_path, :method => :delete
             - else
@@ -44,7 +44,7 @@
 
     .container
       .row
-        / .col-lg-3
+        / .col-lg-6
         /   .well.sidebar-nav
         /     %h3 Sidebar
         /     %ul.nav.nav-list
@@ -52,7 +52,7 @@
         /       %li= link_to "Producenci", "/path1"
         /       %li= link_to "Produkty", "/path2"
         /       %li= link_to "Zamówienia", "/path3"
-        / .col-lg-9
+        / .col-lg-6
         .col-lg-12
           / .notice= notice
           / .alert= alert

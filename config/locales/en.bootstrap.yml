@@ -12,7 +12,7 @@ en:
     links:
       back: "Back"
       cancel: "Cancel"
-      confirm: "Are you sure?"
+      confirm: "Czy na pewno chcesz usunąć?"
       destroy: "Delete"
       new: "New"
       edit: "Edit"

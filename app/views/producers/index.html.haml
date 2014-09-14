@@ -1,27 +1,28 @@
-- model_class = Producer
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+  %h1 Producenci
+= link_to 'Nowy producent', new_producer_path, :class => 'btn btn-primary'
 %table.table.table-striped
   %thead
     %tr
       %th Nazwa
-      %th Adres
-      %th Telefon
+      %th Miejscowość
+      %th Ulica
+      %th Kod pocztowy
       %th Aktywny?
       %th &nbsp;
   %tbody
     - @producers.each do |producer|
       %tr
         %td= link_to producer.name, producer_path(producer)
-        %td= producer.address
-        %td= producer.phone
+        %td= producer.city
+        %td= producer.street
+        %td= producer.zip_code
         %td
           - if producer.is_active
             Tak
           - else
             Nie
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_producer_path(producer), :class => 'btn btn-default btn-xs'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), producer_path(producer), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+          = link_to 'Edytuj', edit_producer_path(producer), :class => 'btn btn-default btn-xs'
+          = link_to 'Usuń', producer_path(producer), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Czy na pewno chcesz usunąć?')) }, :class => 'btn btn-xs btn-danger'
 
-= link_to t('.new', :default => t("helpers.links.new")), new_producer_path, :class => 'btn btn-primary'

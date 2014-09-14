@@ -6,8 +6,9 @@
     %th Email
     %th Telefon
     %th Zamówienia
-    %th Edytuj
-    %th Usuń
+    %th Aktywny?
+    - if current_user.has_any_role? :admin
+      %th &nbsp;
   - @users.each do |user|
     %tr
       %td
@@ -19,6 +20,11 @@
       %td
         = user.phone
       %td Zamówienia
-      /%td= link_to 'Ankiety', user_orders_path(user)
-      %td= link_to 'Edytuj', edit_user_path(user)
-      %td= link_to 'x', user, confirm: 'Jesteś pewny?', method: :delete
+      %td
+        - if user.is_active
+          Tak
+        - else
+          Nie
+      %td
+        = link_to 'Edytuj', edit_user_path(user), :class => 'btn btn-default btn-xs'
+        = link_to 'Usuń', edit_user_path(user), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Czy na pewno chcesz usunąć?')) }, :class => 'btn btn-xs btn-danger'
